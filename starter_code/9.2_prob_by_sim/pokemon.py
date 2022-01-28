@@ -1,7 +1,7 @@
 # This starter code was written by Alex Tsun for CSE 312 Summer 2020.
 
-# Student Name: ____
-# UW Email    : ____@uw.edu
+# Student Name: Phoenix Yi
+# UW Email    : gaoywin1@uw.edu
 
 # =============================================================
 # You may define helper functions, but DO NOT MODIFY
@@ -30,28 +30,31 @@ you catch it. (Ignore any mechanics of the actual game if you’ve played
 a Pokemon game in the past.)
 """
 
-def part_a(filename:str='data/pokemon_small.txt'):
+
+def part_a(filename: str = 'data/pokemon_small.txt'):
     """
     Compute the proportion of Pokemon that are legendary, the average
-    height, the average weight, the average encounter_prob, and average 
-    catch_prob. 
+    height, the average weight, the average encounter_prob, and average
+    catch_prob.
 
     :param filename: The path to the csv as described in the pset.
     :return: A numpy array of length 5 with these 5 quantities.
 
     Hint(s):
-    1. Use np.genfromtxt(...) to load the file. Do NOT hardcode 
+    1. Use np.genfromtxt(...) to load the file. Do NOT hardcode
     'data/pokemon_small.txt' as the parameter as we may use other hidden
     files to test your function.
     2. Use np.mean(...) with its axis parameter to compute means in one line.
     """
-    pass # TODO: Your code here (<= 3 lines)
+    data = np.transpose(np.genfromtxt(filename))
+    return np.array([np.sum(data[1])/len(data[0]), np.mean(data[2]), np.mean(data[3]), np.mean(data[4]), np.mean(data[5])])
 
-def part_b(filename:str='data/pokemon_small.txt'):
+
+def part_b(filename: str = 'data/pokemon_small.txt'):
     """
     Compute the proportion of Pokemon that are legendary, the average
-    height, the average weight, the average encounter_prob, and average 
-    catch_prob OF ONLY those Pokemon STRICTLY heavier than the median weight. 
+    height, the average weight, the average encounter_prob, and average
+    catch_prob OF ONLY those Pokemon STRICTLY heavier than the median weight.
 
     :param filename: The path to the csv as described in the pset.
     :return: A numpy array of length 5 with these 5 quantities.
@@ -60,17 +63,22 @@ def part_b(filename:str='data/pokemon_small.txt'):
     1. Use np.median(...) to compute medians along an axis.
     2. Use np.where(...) to select only certain rows.
     """
-    pass # TODO: Your code here (<= 5 lines)
+    data = np.genfromtxt(filename)
+    data1 = np.transpose(data[np.where(np.transpose(data)[3] > np.median(np.transpose(data)[3]))])
+    return np.array(
+        [np.sum(data1[1]) / len(data1[0]),
+         np.mean(data1[2]), np.mean(data1[3]), np.mean(data1[4]), np.mean(data1[5])])
 
-def part_c(filename:str='data/pokemon_small.txt', ntrials:int=5000):
+
+def part_c(filename: str = 'data/pokemon_small.txt', ntrials: int = 5000):
     """
     Suppose you are walking around the wild grass, and you wonder: how
-    many encounters do you expect to make until you ENCOUNTER each Pokemon 
-    (at least) once? 
+    many encounters do you expect to make until you ENCOUNTER each Pokemon
+    (at least) once?
 
     :param filename: The path to the csv as described in the pset.
     :param ntrials: How many simulations to run.
-    :return: The (simulated) average number of ENCOUNTERS you expect to 
+    :return: The (simulated) average number of ENCOUNTERS you expect to
     make, until you ENCOUNTER each Pokemon (at least) once.
 
     Hint(s):
@@ -84,19 +92,20 @@ def part_c(filename:str='data/pokemon_small.txt', ntrials:int=5000):
         This is a nested function only accessible by parent 'part_c',
         which we're in now. You may want to implement this function!
         """
-        pass
 
-    pass # TODO: Your code here (10-20 lines)
 
-def part_d(filename:str='data/pokemon_small.txt', ntrials:int=5000):
+    pass  # TODO: Your code here (10-20 lines)
+
+
+def part_d(filename: str = 'data/pokemon_small.txt', ntrials: int = 5000):
     """
     Suppose you are walking around the wild grass, and you wonder: how
-    many encounters do you expect to make until you CATCH each Pokemon 
-    (at least) once? 
+    many encounters do you expect to make until you CATCH each Pokemon
+    (at least) once?
 
     :param filename: The path to the csv as described in the pset.
     :param ntrials: How many simulations to run.
-    :return: The (simulated) average number of ENCOUNTERS you expect to 
+    :return: The (simulated) average number of ENCOUNTERS you expect to
     make, until you CATCH each Pokemon (at least) once.
 
     Hint(s):
@@ -114,8 +123,9 @@ def part_d(filename:str='data/pokemon_small.txt', ntrials:int=5000):
         which we're in now. You may want to implement this function!
         """
         pass
-    
-    pass # TODO: Your code here (10-20 lines)
+
+    pass  # TODO: Your code here (10-20 lines)
+
 
 if __name__ == '__main__':
     # You can test out things here. Feel free to write anything below.
