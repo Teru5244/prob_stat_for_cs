@@ -182,13 +182,12 @@ class NaiveBayes():
         Access those variables with a 'self' prefix, like self.num_train_hams.
         """
         # TODO: Your code here (10-20 lines)
-        total = self.num_train_hams + self.num_train_spams
-        p_w_spam = np.log(self.num_train_spams / total)
-        p_w_ham = np.log(self.num_train_hams / total)
+        p_w_spam = np.log(self.num_train_spams / self.num_train_hams + self.num_train_spams)
+        p_w_ham = np.log(self.num_train_hams / self.num_train_hams + self.num_train_spams)
         words = self.word_set(filename)
         for word in words:
-            p_w_ham += np.log((self.word_counts_ham.get(word, 0)+1)/(total+2))
-            p_w_spam += np.log((self.word_counts_spam.get(word, 0)+1)/(total+2))
+            p_w_ham += np.log((self.word_counts_ham.get(word, 0)+1)/(self.num_train_hams+2))
+            p_w_spam += np.log((self.word_counts_spam.get(word, 0)+1)/(self.num_train_spams+2))
         if p_w_spam > p_w_ham:
             return self.SPAM_LABEL
         else:
