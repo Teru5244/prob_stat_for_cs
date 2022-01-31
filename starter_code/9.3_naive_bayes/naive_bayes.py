@@ -138,9 +138,21 @@ class NaiveBayes():
             to avoid writing the same code for self.word_counts_spam and
             self.word_counts_ham!
             """
-            pass
+            result = {}
+            for filename in filenames:
+                words = self.word_set(filename)
+                for word in words:
+                    if word not in result.keys():
+                        result[word] = 1
+                    else:
+                        result[word] += 1
+            return result
 
-        pass # TODO: Your code here (10-20 lines)
+        # TODO: Your code here (10-20 lines)
+        self.num_train_hams = len(train_hams)
+        self.num_train_spams = len(train_spams)
+        self.word_counts_ham = get_counts(train_hams)
+        self.word_counts_spam = get_counts(train_spams)
 
     def predict(self, filename:str):
         """
@@ -169,8 +181,19 @@ class NaiveBayes():
         4. You'll want to use the values you set during the fit function.
         Access those variables with a 'self' prefix, like self.num_train_hams.
         """
-        pass # TODO: Your code here (10-20 lines)
-            
+        # TODO: Your code here (10-20 lines)
+        total = self.num_train_hams + self.num_train_spams
+        p_w_spam = np.log(self.num_train_spams / total)
+        p_w_ham = np.log(self.num_train_hams / total)
+        words = self.word_set(filename)
+        for word in words:
+            p_w_ham += np.log((self.word_counts_ham.get(word, 0)+1)/(total+2))
+            p_w_spam += np.log((self.word_counts_spam.get(word, 0)+1)/(total+2))
+        if p_w_spam > p_w_ham:
+            return self.SPAM_LABEL
+        else:
+            return self.HAM_LABEL
+
 
     def accuracy(self, hams:list, spams:list):
         """
