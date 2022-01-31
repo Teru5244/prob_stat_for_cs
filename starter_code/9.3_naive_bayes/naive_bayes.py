@@ -1,7 +1,7 @@
 # This starter code was written by Alex Tsun for CSE 312 Summer 2020.
 
-# Student Name: ____
-# UW Email    : ____@uw.edu
+# Student Name: Phoenix Yi
+# UW Email    : gaoywin1@uw.edu
 
 # =============================================================
 # You may define helper functions, but DO NOT MODIFY

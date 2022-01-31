@@ -1,7 +1,7 @@
 # This starter code was written by Alex Tsun for CSE 312 Summer 2020.
 
-# Student Name: ____
-# UW Email    : ____@uw.edu
+# Student Name: Phoenix Yi
+# UW Email    : gaoywin1@uw.edu
 
 # =============================================================
 # You may define helper functions, but DO NOT MODIFY
@@ -45,6 +45,10 @@ def gen_bin(n:int = 5, p:float = 0.4) -> int:
     assert 0 <= p <= 1
     assert n >= 0
     # TODO: Your code here (1-5 lines)
+    count = 0;
+    for i in range(n):
+        count += gen_ber(p)
+    return count
 
 
 def gen_geo(p:float = 0.25) -> int:
@@ -58,6 +62,12 @@ def gen_geo(p:float = 0.25) -> int:
     """
     assert 0 <= p <= 1
     # TODO: Your code here (3-7 lines)
+    count = 0
+    success = 0
+    while success == 0:
+        success = gen_ber(p)
+        count += 1
+    return count
 
 def gen_negbin(r:int = 6, p:float = 0.75) -> int:
     """
@@ -72,6 +82,10 @@ def gen_negbin(r:int = 6, p:float = 0.75) -> int:
     assert 0 <= p <= 1
     assert r >= 0
     # TODO: Your code here (1-5 lines)
+    count = 0
+    for i in range(r):
+        count += gen_geo(p)
+    return count
 
 def gen_hypgeo(N:int = 10, K:int = 4, n:int = 5) -> int:
     """
@@ -91,6 +105,10 @@ def gen_hypgeo(N:int = 10, K:int = 4, n:int = 5) -> int:
     assert N >= 1 and K >= 1 and n >= 1
     assert N >= K and n <= N
     # TODO: Your code here (3-5 lines)
+    count = 0
+    for i in range(n):
+        count += np.random.choice([0, 1], p=[((N-i)-(K-count))/(N-i), (K-count)/(N-i)])
+    return count
 
 def gen_poi(lambduh:float = 3.2) -> int:
     """
@@ -106,6 +124,7 @@ def gen_poi(lambduh:float = 3.2) -> int:
     """
     assert lambduh >= 0
     # TODO: Your code here (1-3 lines)
+    return gen_bin(2500, lambduh/2500)
 
 def gen_arb(ps=np.array([0.1, 0.3, 0.4, 0.2])):
     """
@@ -127,6 +146,11 @@ def gen_arb(ps=np.array([0.1, 0.3, 0.4, 0.2])):
     assert np.all(ps >= 0)
     assert np.sum(ps) == 1
     # TODO: Your code here (~5 lines)
+    pcs = np.cumsum(ps)
+    r = np.random.rand()
+    for i in range(len(pcs)):
+        if r < pcs[i]:
+            return i
 
 if __name__ == '__main__':
     # You can test out things here. Feel free to write anything below.
