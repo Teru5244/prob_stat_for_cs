@@ -1,7 +1,7 @@
 # This starter code was written by Alex Tsun for CSE 312 Summer 2020.
 
-# Student Name: ____
-# UW Email    : ____@uw.edu
+# Student Name: Phoenix Yi
+# UW Email    : gaoywin1@uw.edu
 
 # =============================================================
 # You may define helper functions, but DO NOT MODIFY
@@ -36,7 +36,16 @@ def bootstrap_pval(group1, group2, ntrials=50000):
     5. Remember that when you resample, to make sure the number of resampled values is
     the same as that of the original. 
     """
-    pass # TODO: Your code here (~10-15 lines)
+    obs_diff = np.abs(np.mean(group1) - np.mean(group2))
+    combined = np.concatenate([group1, group2])
+    count = 0
+    for i in range(10000):
+        x_prime = np.random.choice(combined, len(group1), replace=True)
+        y_prime = np.random.choice(combined, len(group2), replace=True)
+        diff = np.abs(np.mean(x_prime) - np.mean(y_prime))
+        if diff >= obs_diff:
+            count += 1
+    return count/10000
 
 if __name__ == '__main__':
     """

@@ -1,7 +1,7 @@
 # This starter code was written by Alex Tsun for CSE 312 Summer 2020.
 
-# Student Name: ____
-# UW Email    : ____@uw.edu
+# Student Name: Phoenix Yi
+# UW Email    : gaoywin1@uw.edu
 
 # =============================================================
 # You may define helper functions, but DO NOT MODIFY
@@ -147,6 +147,22 @@ class MultiArmedBandit:
         # TODO: Your code here (~15-20 lines)
         # Do NOT delete/modify the line above and below this comment.
 
+        total_reward = np.zeros(self.K)
+        number_pulled = np.zeros(self.K)
+
+        for i in range(self.K):
+            reward = self.pull_arm(i)
+            number_pulled[i] += 1
+            total_reward[i] += reward
+
+        for t in range(self.K + 1, T + 1):
+            p_hat = total_reward / number_pulled
+            pull = np.argmax(p_hat + np.sqrt((2*np.log(t)) / number_pulled))
+
+            reward = self.pull_arm(pull)
+            number_pulled[pull] += 1
+            total_reward[pull] += reward
+
         return np.sum(self.reward_history)
 
     def thompson_sampling(self, T=100000):
@@ -173,6 +189,18 @@ class MultiArmedBandit:
         
         # TODO: Your code here (~10-15 lines)
         # Do NOT delete/modify the line above and below this comment.
+
+        alpha = np.ones(self.K)
+        beta = np.ones(self.K)
+
+        for t in range(1, T+1):
+            s = np.random.beta(alpha, beta)
+            pull = np.argmax(s)
+            reward = self.pull_arm(pull)
+            if reward == 1:
+                alpha[pull] += 1
+            elif reward == 0:
+                beta[pull] += 1
 
         return np.sum(self.reward_history)
 
